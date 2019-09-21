@@ -24,13 +24,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var labelGreen: UILabel!
     @IBOutlet weak var labelBlue: UILabel!
     
-    
     var floatValueRed : CGFloat = 0
     var floatValueGreen : CGFloat = 0
     var floatValueBlue : CGFloat = 0
     var floatValueAlpha: CGFloat = 0
     
     
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +44,9 @@ class ViewController: UIViewController {
     }
 
 
+    
 
     @IBAction func sliderChanging(_ sender: UISlider) {
-        
         let value = Int(sender.value)
         
         switch sender.tag {
@@ -61,17 +61,20 @@ class ViewController: UIViewController {
         paintView()
     }
     
+    
 
     //тап мимо клавиатуры должен завершить ввод
-    @objc func viewTapped(gestureRecognizer: UITapGestureRecognizer) {
+    @objc private func viewTapped(gestureRecognizer: UITapGestureRecognizer) {
         view.endEditing(true)
         getValueFromTxtField()
         paintView()
     }
     
     
+    
+    
     //the Done button
-    @objc func donePressed() {
+    @objc private func donePressed() {
         view.endEditing(true)
         getValueFromTxtField()
         paintView()
@@ -85,7 +88,8 @@ class ViewController: UIViewController {
     
     
     
-    func getValueFromTxtField() {
+    
+    private func getValueFromTxtField() {
         
         if let strRed = txtFieldRed.text {
             if let red = Float(strRed) {
@@ -106,12 +110,15 @@ class ViewController: UIViewController {
     
     
     
-    func paintView() {
+    
+    private func paintView() {
         outputView.backgroundColor = UIColor(red: floatValueRed/255, green: floatValueGreen/255, blue: floatValueBlue/255, alpha: floatValueAlpha)
     }
     
     
-    func setText(red: Int?, green: Int?, blue: Int?) {
+ 
+    
+    private func setText(red: Int?, green: Int?, blue: Int?) {
         //for labels
         if let red = red {labelRed.text = "R: " + String(red)}
         if let green = green {labelGreen.text = "G: " + String(green)}
@@ -121,16 +128,15 @@ class ViewController: UIViewController {
         if let red = red {txtFieldRed.text = String(red)}
         if let green = green {txtFieldGreen.text = String(green)}
         if let blue = blue {txtFieldBlue.text = String(blue)}
-        
     }
 }
+
 
 
 
 extension ViewController {
     private func setupElements() {
         outputView.layer.cornerRadius = outputView.frame.height / 10
-        
         //получим начальные значения для слайдеров от вью
         if let colorRGB = outputView.backgroundColor {
             if colorRGB.getRed(&floatValueRed, green: &floatValueGreen, blue: &floatValueBlue, alpha: &floatValueAlpha) {
@@ -140,14 +146,14 @@ extension ViewController {
                 sliderRed.value = Float(floatValueRed * 255.0)
                 sliderGreen.value = Float(floatValueGreen * 255.0)
                 sliderBlue.value = Float(floatValueBlue * 255.0)
-                
             }
         }
     }
     
     
+  
+    
     private func setupKeyboard() {
-        
         //кнопка Done на всплывающей клав.
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
@@ -164,6 +170,9 @@ extension ViewController {
         txtFieldBlue.inputAccessoryView = toolBar
     }
 }
+
+
+
 
 extension ViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
